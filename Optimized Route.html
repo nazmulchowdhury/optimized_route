@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="shortcut icon" href="images/speedy_route.png" type="image/png">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAo9sDcaQVV9YnmXlg9Qoya33WygZuTdcs"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script src="js/ng-map.min.js"></script>
+    <script src="js/routeApp.module.js"></script>
+    <script src="js/distance.service.js"></script>
+    <script src="js/sorting.service.js"></script>
+    <script src="js/optimalRouteViewing.service.js"></script>
+    <script src="js/route.controller.js"></script>
+    <title>Optimized Route Map</title>
+</head>
+
+<body class="container" ng-app="routeApp" ng-cloak ng-controller="RouteController">
+    <div class="row">
+        <h2 class="page-header">Optimized Route Map</h2>
+        <div class="form-group">
+            <div class="col-sm-2">
+                <button class="btn btn-default" ng-click="addLocation()">Add Location</button>
+            </div>
+            <div class="col-sm-6">
+                <input ng-model="location" class="form-control" placeholder="Enter valid address">
+            </div>
+            <label class="col-sm-4 text-warning">{{errortext}}</label>
+        </div>
+    </div><br>
+    <span class="row">
+            <div class="col-sm-4">
+                <p><b>{{getListHeader()}}</b></p>
+                <ol class="list-group">
+                    <li class='list-group-item' ng-repeat="x in trip_locations track by $index">{{$index+1}}.&nbsp&nbsp{{x["location"]}}<span class='delete badge' ng-click="removeLocation($index)"><span class='glyphicon glyphicon-remove'></span></span>
+    </li>
+    </ol>
+    <button class="btn btn-default" ng-click="getOptimizedRoute()" ng-hide="isHidden">Get Optimized Route</button>
+    </div>
+    <div class="col-sm-8">
+        <ng-map center="{{point}}" map-type-id="TERRAIN" class="boxshadow">
+            <marker position="{{point}}" animation="DROP" optimized=false></marker>
+        </ng-map>
+    </div>
+    </span>
+</body>
+
+</html>
